@@ -10,4 +10,13 @@ public class FileLoggerTest {
             Assert.fail("Class named FileLogger should exist");
         }
     }
+
+    @Test
+    public void test_method_existence(){
+        try {
+            FileLogger.class.getDeclaredMethod("log", String.class);
+        } catch(NoSuchMethodException e) {
+            Assert.fail("Class named FileLogger should have method called log with string parameter");
+        }
+    }
 }
