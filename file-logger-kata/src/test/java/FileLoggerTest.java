@@ -16,7 +16,7 @@ public class FileLoggerTest {
         // Context
         FileLogger logger = new FileLogger();
         Path path = Paths.get(logger.getFileName());
-        Files.delete(path);
+        Files.deleteIfExists(path);
         Assert.assertFalse(Files.exists(path));
 
         // Business logic
@@ -32,6 +32,8 @@ public class FileLoggerTest {
         FileLogger logger = new FileLogger();
         Path path = Paths.get(logger.getFileName());
         String message = "My Message";
+        logger.log("hello");
+        logger.log("world");
 
         // Business logic
         List<String> linesBefore = Files.readAllLines(path);
@@ -50,12 +52,42 @@ public class FileLoggerTest {
     public void test_if_name_is_correct() throws IOException {
         // Context
         LocalDate date = LocalDate.of(2018,02,14);
+        FileLogger fileLogger = new FileLogger(date);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String strDate = date.format(formatter);
         String expectedFilename = "log" + strDate + ".txt";
 
         // Business logic
+        String filename = fileLogger.getFileName();
+
+        // Asserts
+        Assert.assertEquals(expectedFilename, filename);
+    }
+
+    @Test
+    public void test_file_name_on_saturday()
+    {
+        // Context
+        LocalDate date = LocalDate.of(2018,02,17);
         FileLogger fileLogger = new FileLogger(date);
+        String expectedFilename = "weekend.txt";
+
+        // Business logic
+        String filename = fileLogger.getFileName();
+
+        // Asserts
+        Assert.assertEquals(expectedFilename, filename);
+    }
+
+    @Test
+    public void test_file_name_on_sunday()
+    {
+        // Context
+        LocalDate date = LocalDate.of(2018,02,18);
+        FileLogger fileLogger = new FileLogger(date);
+        String expectedFilename = "weekend.txt";
+
+        // Business logic
         String filename = fileLogger.getFileName();
 
         // Asserts

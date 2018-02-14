@@ -16,9 +16,15 @@ public class FileLogger{
     }
 
     public String getFileName() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String strDate = localDate.format(formatter);
-        return "log" + strDate + ".txt";
+        switch(localDate.getDayOfWeek()) {
+            case SATURDAY:
+            case SUNDAY:
+                return "weekend.txt";
+            default:
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+                String strDate = localDate.format(formatter);
+                return "log" + strDate + ".txt";
+        }
     }
 
     public void log(String message) throws IOException {
