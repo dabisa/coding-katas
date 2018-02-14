@@ -1,0 +1,4 @@
+rootProject.name = 'coding-katas'
+include 'file-logger-kata'
+findProject(':file-logger-kata')?.name = 'codingkatas'
+
